@@ -6,19 +6,17 @@ import os
 def getData(directory):
   cards = []
   for entry in os.scandir(directory):
-      if entry.is_dir():  # make sure it's a folder (e.g. 'five of diamonds')
-          for image in os.scandir(entry.path):  # use .path instead of entry
-              if image.name.endswith(('.jpg', '.png', '.jpeg')):  # only images
+      # make sure it's a folder (e.g. 'five of diamonds')
+      if entry.is_dir():
+          # use .path instead of entry
+          for image in os.scandir(entry.path):
+              # only images
+              if image.name.endswith(('.jpg', '.png', '.jpeg')):  
                   # Read image with OpenCV
-                  img = cv.imread(image.path)         # loads as BGR NumPy array
-                  img = cv.cvtColor(img, cv.COLOR_BGR2RGB)  # convert to RGB (optional)
+                  img = cv.imread(image.path)
 
-                  # Convert to NumPy array (though OpenCV already returns np.array)
-                  arr = np.array(img)
-
-                  cards.append(arr)
-                  print(f"Loaded {image.path} with shape {arr.shape}")
-                  #print(f"Total images loaded: {len(cards)}")
+                  cards.append(img)
+                  print(f"Loaded {image.path} with shape {img.shape}")
   return cards
 
 testData = getData('./archive/test')
