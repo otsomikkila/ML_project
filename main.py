@@ -11,14 +11,11 @@ def getData(directory):
           for image in os.scandir(entry.path):
               if image.name.endswith(('.jpg', '.png', '.jpeg')): 
                   img = cv.imread(image.path)         # loads as BGR NumPy array
-                  img = cv.cvtColor(img, cv.COLOR_BGR2RGB)  # convert to RGB
 
-                  arr = np.array(img)
-
-                  cards.append(arr)
+                  cards.append(img)
                   labels.append(label)
                   #print(f"Loaded {image.path} with shape {arr.shape}")
-  return cards, np.array(labels)
+  return np.array(cards), np.array(labels)
 
 X_test, y_test = getData('./archive/test')
 X_val, y_val = getData('./archive/valid')
