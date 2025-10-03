@@ -4,24 +4,23 @@ import cv2 as cv
 import os
 
 def getData(directory):
-  cards = []
+  cards, labels = [], []
   for entry in os.scandir(directory):
-      if entry.is_dir():  # make sure it's a folder (e.g. 'five of diamonds')
-          for image in os.scandir(entry.path):  # use .path instead of entry
-              if image.name.endswith(('.jpg', '.png', '.jpeg')):  # only images
-                  # Read image with OpenCV
+      if entry.is_dir(): 
+          label = entry.name
+          for image in os.scandir(entry.path):
+              if image.name.endswith(('.jpg', '.png', '.jpeg')): 
                   img = cv.imread(image.path)         # loads as BGR NumPy array
-                  img = cv.cvtColor(img, cv.COLOR_BGR2RGB)  # convert to RGB (optional)
+                  img = cv.cvtColor(img, cv.COLOR_BGR2RGB)  # convert to RGB
 
-                  # Convert to NumPy array (though OpenCV already returns np.array)
                   arr = np.array(img)
 
                   cards.append(arr)
-                  print(f"Loaded {image.path} with shape {arr.shape}")
-                  #print(f"Total images loaded: {len(cards)}")
-  return cards
+                  labels.append(label)
+                  #print(f"Loaded {image.path} with shape {arr.shape}")
+  return cards, np.array(labels)
 
-testData = getData('./archive/test')
-validateData = getData('./archive/valid')
-#trainData = getData('./archive/train')
+X_test, y_test = getData('./archive/test')
+X_val, y_val = getData('./archive/valid')
+#X_test, y_test = getData('./archive/train')
 
