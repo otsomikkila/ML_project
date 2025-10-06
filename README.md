@@ -17,7 +17,7 @@ source venv/bin/activate
 
 lataa pip paketit:
 ´´´
-pip install numpy matplotlib opencv-python scikit-learn
+pip install numpy matplotlib opencv-python scikit-learn tensorflow
 ´´´
 
 
